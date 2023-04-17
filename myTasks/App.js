@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, StatusBar } from "react-native";
 import {NavigationContainer} from "@react-navigation/native"
 
 import SingIn from "./src/pages/SingIn";
+import MyTabs from "./src/routes/MyTabs";
 
 export default function App() {
   return (
@@ -12,7 +13,8 @@ export default function App() {
         barStyle="light-content"
         translucent={false}
       />
-      <SingIn />
+      {/* <SingIn /> */}
+      <MyTabs />
     </NavigationContainer>
   );
 }
