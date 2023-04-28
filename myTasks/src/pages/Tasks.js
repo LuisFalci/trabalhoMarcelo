@@ -1,11 +1,21 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
+import actions from "../services/sqlite/Task";
+import { useNavigation } from '@react-navigation/native';
 
 export default function Tasks() {
-    // Aqui você pode colocar o código para buscar as tarefas do seu banco de dados
+    const navigation = useNavigation();
 
-    let tasks = ["Tarefa 1", "Tarefa 2", "Tarefa 3"];
+    const [tasks, setTasks] = useState();
+
+    getTasks();
+
+    function getTasks() {
+        actions.all()
+            .then((response) => setTasks(response))
+            .catch((error) => console.error(`Erro ao criar nova tarefa: ${error}`));
+    }
 
     return (
         <View style={styles.container}>
@@ -26,22 +36,28 @@ export default function Tasks() {
 
             {/* Containers de tarefa */}
             {
-                tasks.map((task, index) => {
-                    return (
-                        <View style={styles.taskContainer} key={index}>
-                            <Text>{task}</Text>
-                            <View style={styles.buttonsContainer}>
-                                <Ionicons name="close-circle" size={50} color="#FF0000" />
-                                <Ionicons name="checkmark-circle" size={50} color="#30BB3D" />
+                tasks && tasks.length > 0 ?
+                    tasks.map((task, index) => {
+                        return (
+                            <View style={styles.taskContainer} key={index}>
+                                <Text>{task.title}</Text>
+                                <View style={styles.buttonsContainer}>
+                                    <Ionicons name="close-circle" size={50} color="#FF0000" />
+                                    <Ionicons name="checkmark-circle" size={50} color="#30BB3D" />
+                                </View>
                             </View>
-                        </View>
-                    );
-                })
+                        );
+                    })
+                    : null
             }
 
-            <View style={styles.iconContainer}>
+            <TouchableOpacity
+                style={styles.iconContainer}
+                onPress={() => navigation.navigate('Create')}
+            >
                 <Ionicons name="add-circle" size={70} color="#1C6B3C" />
-            </View>
+            </TouchableOpacity>
+
         </View>
     );
 }
