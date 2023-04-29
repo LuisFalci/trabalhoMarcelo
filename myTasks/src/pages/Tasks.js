@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import { Ionicons } from '@expo/vector-icons';
 import actions from "../services/sqlite/Task";
 import { useNavigation } from '@react-navigation/native';
@@ -15,6 +15,16 @@ export default function Tasks() {
         actions.all()
             .then((response) => setTasks(response))
             .catch((error) => console.error(`Erro ao criar nova tarefa: ${error}`));
+    }
+
+    function deleteTask(id) {
+        actions.remove(id)
+            .then((response) => setTasks(response))
+            .catch((error) => console.error(`Erro ao criar nova tarefa: ${error}`));
+    }
+
+    const handleTaskDoubleClick = (task) => {
+        navigation.navigate('Edit', { task: task });
     }
 
     return (
@@ -33,24 +43,28 @@ export default function Tasks() {
                     <Ionicons name="funnel" size={30} color="#000000" />
                 </View>
             </View>
+            <ScrollView>
 
-            {/* Containers de tarefa */}
-            {
-                tasks && tasks.length > 0 ?
-                    tasks.map((task, index) => {
-                        return (
-                            <View style={styles.taskContainer} key={index}>
-                                <Text>{task.title}</Text>
-                                <View style={styles.buttonsContainer}>
-                                    <Ionicons name="close-circle" size={50} color="#FF0000" />
-                                    <Ionicons name="checkmark-circle" size={50} color="#30BB3D" />
-                                </View>
-                            </View>
-                        );
-                    })
-                    : null
-            }
 
+                {/* Containers de tarefa */}
+                {
+                    tasks && tasks.length > 0 ?
+                        tasks.map((task) => {
+                            return (
+                                <TouchableOpacity onPress={() => handleTaskDoubleClick(task)}>
+                                    <View style={styles.taskContainer} key={task.id}>
+                                        <Text>{task.title}</Text>
+                                        <View style={styles.buttonsContainer}>
+                                            <Ionicons name="close-circle" size={50} color="#FF0000" onPress={() => deleteTask(task.id)} />
+                                            <Ionicons name="checkmark-circle" size={50} color="#30BB3D" />
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            );
+                        })
+                        : null
+                }
+            </ScrollView>
             <TouchableOpacity
                 style={styles.iconContainer}
                 onPress={() => navigation.navigate('Create')}

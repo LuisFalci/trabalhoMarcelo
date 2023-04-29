@@ -1,24 +1,18 @@
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import MainNavigator from './src/routes/MyTabs';
+import { StatusBar } from 'expo-status-bar';
 
-import {NavigationContainer} from "@react-navigation/native"
-
-import SingIn from "./src/pages/SingIn";
-import Create from "./src/pages/Create";
-import MyTabs from "./src/routes/MyTabs";
-
-export default function App() {
+function App() {
   return (
+    <>
+    <StatusBar hidden={true} />
     <NavigationContainer>
-      <StatusBar
-        backgroundColor="#1d1d2e"
-        barStyle="light-content"
-        translucent={false}
-      />
-      {/* <SingIn /> */}
-      <MyTabs />
-      
-      {/* <Create /> */}
+        <MainNavigator />
+      </NavigationContainer>
+    </>
 
-    </NavigationContainer>
   );
 }
+
+export default App;

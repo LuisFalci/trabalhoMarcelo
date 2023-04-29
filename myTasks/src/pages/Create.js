@@ -36,148 +36,79 @@ export default function Create({ navigation }) {
       .catch((error) => console.error(`Erro ao criar nova tarefa: ${error}`));
   }
 
-  function deleteTask(id) {
-    actions.remove(id)
-      .then((response) => setTasks(response))
-      .catch((error) => console.error(`Erro ao criar nova tarefa: ${error}`));
-  }
-
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Criar Tarefa</Text>
-
-      <TextInput
-        placeholder="Titulo"
-        placeholderTextColor="#F0F0F0"
-        style={styles.input}
-        keyboardType="numeric"
-        value={title}
-        onChangeText={setTitle}
-      />
-      <TextInput
-        placeholder="Descrição"
-        placeholderTextColor="#F0F0F0"
-        style={styles.input}
-        keyboardType="numeric"
-        value={description}
-        onChangeText={setDescription}
-      />
-      <TouchableOpacity style={styles.button} onPress={createTask}>
-        <Text style={styles.buttonText}>Criar task</Text>
-      </TouchableOpacity>
-      <ScrollView style={styles.scrollView}>
-        <View>
-          {
-            tasks && tasks.length > 0 ?
-              tasks.map((task) => {
-                return (
-                  <View style={styles.taskContainer} key={task.id}>
-                    <Text>{task.title}</Text>
-                    <View style={styles.buttonsContainer}>
-                      <Ionicons
-                        name="close-circle"
-                        size={50}
-                        color="#FF0000"
-                        onPress={() => deleteTask(task.id)}
-                      />
-                      <Ionicons name="checkmark-circle" size={50} color="#30BB3D" />
-                    </View>
-                  </View>
-                );
-              }) : null
-          }
+      <View style={styles.containerMargin}>
+        <Text style={styles.label}>Título</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholderTextColor="#F0F0F0"
+            style={styles.input}
+            value={title}
+            onChangeText={setTitle}
+          />
         </View>
-      </ScrollView>
+
+        <Text style={styles.label}>Descrição</Text>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholderTextColor="#F0F0F0"
+            style={styles.input}
+            value={description}
+            onChangeText={setDescription}
+          />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.button} onPress={createTask}>
+            <Text style={styles.buttonText}>Criar task</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </SafeAreaView>
   )
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
-  titleContainer: {
-    backgroundColor: "#1C6B3C",
-    width: "100%",
-    height: "11%",
-    justifyContent: "center",
-    alignItems: "center",
+  label: {
+    fontSize: 16,
+    marginTop: 10,
+    marginLeft: 20,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#fff"
-  },
-  taskContainer: {
-    backgroundColor: "#F6FAFF",
-    borderRadius: 10,
-    padding: 20,
-    marginBottom: 10,
-    marginHorizontal: 10,
-    marginTop: 15,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderWidth: 1,
-    borderColor: "#000",
+  inputContainer: {
+    marginHorizontal: 20,
+    marginBottom: 20,
   },
   input: {
-    width: "90%",
-    height: 60,
-    backgroundColor: "#101026",
-    borderRadius: 4,
-    paddingHorizontal: 8,
-    textAlign: "center",
-    fontSize: 22,
-    color: "#FFF",
-    marginBottom: 10,
+    backgroundColor: '#D9D9D9',
+    borderRadius: 10,
+    padding: 10,
   },
-  buttonsContainer: {
-    flexDirection: "row-reverse",
-  },
-  filterIconContainer: {
-    marginLeft: 10,
-  },
-  iconContainer: {
-    position: "absolute",
-    bottom: 20,
-    right: 20,
+  buttonContainer: {
+    alignItems: 'center',
+    marginTop: 60
   },
   button: {
-    width: "90%",
-    height: 40,
-    backgroundColor: "#3fffa3",
-    borderRadius: 4,
-    marginVertical: 12,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#1C6B3C',
+    borderRadius: 10,
+    padding: 15,
+    alignItems: 'center',
+    width: '90%',
+    marginHorizontal: 20,
   },
   buttonText: {
-    fontSize: 18,
-    color: "#101026",
-    fontWeight: "bold",
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
-  dataText: {
-    fontSize: 22,
-    color: "#FFF",
-    width: "20%",
-  },
-  dataView: {
-    width: "90%",
-    flexDirection: "row",
-  },
-  dataButton: {
-    height: 60,
-    left: "10%",
-    width: "70%",
-    marginRight: "10%",
-    backgroundColor: "#101026",
-    borderRadius: 4,
-    paddingHorizontal: 8,
-    textAlign: "center",
-    fontSize: 22,
-    color: "#FFF",
-    marginBottom: 10,
+  containerMargin: {
+    marginTop: 60
   }
+
 });
+
+
+
